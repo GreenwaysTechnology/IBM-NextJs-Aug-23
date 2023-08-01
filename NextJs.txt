@@ -1,0 +1,429 @@
+				NEXT.JS
+
+
+What is a Next?
+
+Next.js is a framework for building web applications.
+
+With Next.js, you can build user interfaces using React components. Then, Next.js provides additional structure, features, and optimizations for your application.
+
+Under the hood, Next.js also abstracts and automatically configures tooling for you, like bundling, compiling, and more. This allows you to focus on building your application instead of spending time setting up tooling.
+
+Whether you're an individual developer or part of a larger team, Next.js can help you build interactive, dynamic, and fast web applications.
+
+Types of web apps:
+Web Applications:
+.................
+
+What is web app?
+  Type of distributed app,deployed at server , accessed over network(internet) vi various network protocals like http,tcp,smtp...
+  
+  Web apps works based on request and response model.
+  Web apps are hosted on server called web server.
+
+Web server receives request , runs a program, that program returns response to the client.
+
+Reponse would be document.
+=>HTML
+ 
+other reponses types
+XML,JSON,Documents,images,vidoes.........
+
+What is web and why it was created?
+
+  Tim Berners-Lee, a British scientist, invented the World Wide Web (WWW) in 1989, while working at CERN. The web was originally conceived and developed to meet the demand for automated information-sharing between scientists in universities and institutes around the world.
+
+The first Web browser is line mode web browser,launched in 1992.
+
+The first web server is NeXT computer
+
+The first web page , lanuched http://info.cern.ch/hypertext/WWW/TheProject.html
+
+
+Types of Web application:
+
+1.Static web applications - 1989 to 1995 (Now a days also people are building this type apps)
+   Hard coded html pages , prepared html pages  kept at webserver , the webserver will send those html pages to clients(browsers)
+
+2.Dynamic Content generation application(1996 to till date)
+  After 1995, many people thought that how we can use web for biz information system
+ how to share biz informations via internet.
+ Generally biz data is stored in databases , how to embed data base data into html pages
+
+ 1.web server need to talk to database
+ 2.web server need to prepare html pages based on database records
+ 3.Those information must be transported to web clients
+
+Web server core design to get client request and send html response to the client.
+
+Along with web server, something was introduced called "Programming language runtime"
+
+The first run time was created based on "c" language called "CGI-comman Gate way interface" later instead of c language "PERL" language.
+
+3.Web services-1998 to till date
+ Rise of ECommerce, using internet and web how to exchange data between two biz organizations.
+ The existing html technology was not suitable to send and recive data because html is just user interface document language.
+ We need to data to be exechanged, thats where new data model was created called 'XML'
+xml based web apps called web services.
+
+soap protocal was created to transfer XML based documents "SOAP based webservices"
+
+After 2005 soap based web services, started failing due to mobile computing.
+
+New Web services  were designed called "RestFull Web services"
+
+Restfull web services were used to build any type of data formats like json,xml,pdf,html etc...
+
+
+
+4.Client side web apps called "Single Page Web Apps"(2007 to till date)
+
+Single page web apps are built using javascript at client side where as server side web services(REST apis) are used.
+
+SPA Tech stack:
+HTML 5,CSS 3, Javascript.
+Frameworks build based on SPA
+
+1.Angular js
+2.react
+3.vue js
+..............
+.....................................................................................
+			  React as SPA lib
+.....................................................................................
+
+Reactjs was created by facebook , in order to build SPA applications for browsers.
+
+Advantages of SPA:
+1.Pages are created  at client side, so server load is completly removed
+2.SPA reduces the lot of phsyical pages after deployment.
+3.Clear separations of concerns.
+
+Drawbacks of SPA:
+.................
+
+Pure client SPAs are problematic when the app is senstive to SEO and time-to concept
+This is because the browser will recive a large empty HTML page and has to wait until the javascript is loaded before rendering any thing.
+
+The brith of new Technology called  "SSR" -  Server Side Rendering:
+..................................................................................
+ I need SEO but at the same time, i want to use SPA as well.
+
+We provides first class api to "render"  an SPA app into HTML strings on the server.
+This allows server to send back already rendered HTML, allowing end users to see the content immediately while the javascript is being downloaded.
+
+This process is called "hydration", the app is compiled at server side and sent to the client which will be  interactive.
+....................................................................................
+				 Rendering Types
+
+CSR(Client side Rendering): SPA: 
+
+CSR stands for Client Side Rendering. Here the entire website is rendered in the browser.
+
+Use when building a admin dashboard and when seo is not important. Required javascript enabled on the browser.
+
+SSR (Server side rendering)
+
+SSR stands for Server Side Rendering. Here the webpages are rendered on the server and then sent to the client.
+
+Use when speed and seo is important. App works without javascript enabled in browser.
+
+
+SSG(Static site generation)
+
+ SSG stands for Static Site Generation. Here the webpages are rendered on the build time.
+
+Use when speed and seo is important. Host the app on any static hosting (netlify/vercel)
+
+
+ISR(Incremental Static Regeneration):
+
+ ISR stands for Incremental Static Regeneration. Here the webpages are regenerated on the fly based after the defined time.
+
+Same benefits as SSG. Entire app doesn't need to be build after each change.
+
+
+.....................................................................................
+			   Next js  -SSR and SSG
+.....................................................................................
+
+Next js is full stack web framwork built on the top of react core features  to build modern SSG and SSR apps at very fast...
+
+Next js uses "rust based build system" where as react uses web pack build ....
+.....................................................................................
+			 Basic building block of Next js(Web apps)
+.....................................................................................
+1.page
+2.Routing
+3.Data Fetching
+4.Rendering - Client side rendering(traditional ajax) + server side rendering
+6.Styling
+7.Type script is another language of choice building strongly typed server side apps
+8.API Develovement
+...................................................................................
+			 Next app setup 
+....................................................................................
+
+Next app technologies:
+
+1.React
+  It is free and opensource front-end javascript lib for building user interfaces
+
+2.Turbopack
+   An intcremental bundler optimized for javascript and typescript written in Rust and built into Next js
+
+3.Speedy web compiler
+   A Extensible to Rust based platform for the next generation of fast developer tools, and can be used for both compilation and bundling.
+
+4.Vercel platform
+   Vercel is the company who created next js, they are providing a platform to deploy applications in cloud, server less env.
+
+.....................................................................................
+
+Installing Next infrastructure:
+
+System Req:
+ ->Node js 16.8 or later
+ ->OS - it can be windows, mac or Linux are supported
+
+Two types of installation
+1.Automatic installation
+   Which setps everything automatically for you.
+
+npx create-next-app@latest
+
+Need to install the following packages:
+  create-next-app@13.4.2
+Ok to proceed? (y) y
+√ What is your project named? ... my-app
+√ Would you like to use TypeScript with this project? ... No / Yes
+√ Would you like to use ESLint with this project? ... No / Yes
+√ Would you like to use Tailwind CSS with this project? ... No / Yes
+√ Would you like to use `src/` directory with this project? ... No / Yes
+√ Use App Router (recommended)? ... No / Yes
+√ Would you like to customize the default import alias? ... No / Yes
+Creating a new Next.js app in E:\session\IBM\2023\May\NextJS\my-app.
+
+Using npm.
+
+Initializing project with template: app-tw
+
+
+Installing dependencies:
+- react
+- react-dom
+- next
+- tailwindcss
+- postcss
+- autoprefixer
+
+2.Manual Installation
+ npm install next@latest react@latest react-dom@lastest
+
+
+package.json
+{
+  "name": "my-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "autoprefixer": "10.4.14",
+    "next": "13.4.2",
+    "postcss": "8.4.23",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "tailwindcss": "3.3.2"
+  }
+}
+
+scripts:
+ dev: runs next dev to start next.js in development mode
+ build: runs next build to build the application for production usage
+ start: runs next start to start a next apps in production mode.
+ lint: runs next lint to set up next built in eslint configuration.
+.........
+
+
+next.config.js
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {}
+
+module.exports = nextConfig
+
+ This is going to be used for configuring the next apps.
+
+
+src/app
+  having basic start up files
+
+layout.js
+  root file like index.js or main.js 
+
+page.js
+   landing page is available inside layout.js
+
+public:
+  stores static assests such images,fonts,documents
+  public dir are accessed inside code using the base URL "/".
+
+
+How to start dev server?
+
+ npm run dev
+
+Building Blocks of a Web Application
+....................................
+There are a few things you need to consider when building modern applications. Such as:
+
+1.User Interface - how users will consume and interact with your application.
+
+2.Routing - how users navigate between different parts of your application.
+
+3.Data Fetching - where your data lives and how to get it.
+
+4.Rendering - when and where you render static or dynamic content.
+
+5.Integrations - what third-party services you use (CMS, auth, payments, etc) and how you connect to them.
+
+6.Infrastructure - where you deploy, store, and run your application code (Serverless, CDN, Edge, etc).
+
+7.Performance - how to optimize your application for end-users.
+
+8. Scalability - how your application adapts as your team, data, and traffic grow.
+
+9.Developer Experience - your team’s experience building and maintaining your application.
+
+
+next.config.js
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {}
+
+module.exports = nextConfig
+
+ This is going to be used for configuring the next apps.
+
+
+src/app
+  having basic start up files
+
+layout.js
+page.js
+   landing page is available inside layout.js
+
+public:
+  stores static assests such images,fonts,documents
+  public dir are accessed inside code using the base URL "/".
+
+
+How to start dev server?
+
+ npm run dev
+....................................................................................
+			 Root File/Root Component
+.....................................................................................
+
+In react , there is index.html which is built in ready made file, inside that file only we create DOM tree and we insert
+
+index.html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <title>React App</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root">
+      
+    </div>
+  </body>
+</html>
+
+here div element is root container element.inside we create DOM tree and insert which is called SPA
+  HTML elements are created at client only.
+
+Where as SSR , index.html and other html files are created server side.
+
+How to create index.html in Next app?
+
+ Next provides a root Component called "RootLayout"
+// import './globals.css'
+import { Inter } from 'next/font/google'
+
+const inter = Inter({ subsets: ['latin'] })
+
+export const metadata = {
+  title: 'Create Next App',
+  description: 'Generated by create next app',
+}
+
+// export default function RootLayout({ children }) {
+//   return (
+//     <html lang="en">
+//       <body className={inter.className}>{children}</body>
+//     </html>
+//   )
+// }
+export default function RootLayout(props) {
+  return <html lang="en">
+    <body>
+      <h1>Welcome to Next app</h1>
+    </body>
+  </html>
+}
+
+Here the component name can be any thing "RootLayout" or "MyLayout" "AppLayout"
+but the next is going to identify the root component based on file names
+
+
+Arrow functions:
+const RootLayout = ({ children }) => {
+  return <html lang="en">
+    <body className={inter.className}>{children}</body>
+  </html>
+}
+export default RootLayout;
+....................................................................................
+			 React Foundation for Next Js
+....................................................................................
+
+React is based on Component driven Architecture.
+
+What is Component?
+ Component is object.
+ Since Component is object we can reuse.
+ Component represents a User interface.
+
+There two types of components
+
+1.client side components
+  Components are used in the single page webs 
+2.server side components
+  Components are used in the server side.
+
+Server and clients components allow developers to build apps that span the server and client ,coimbining the rich interactivity of client side apps with the improved performance of traditional server rendering.
+
+
+
+
