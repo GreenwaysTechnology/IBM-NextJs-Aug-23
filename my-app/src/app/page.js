@@ -1,8 +1,16 @@
-// import Image from 'next/image'
-// import styles from './page.module.css'
-
+import styles from './page.module.css'
+import Link from 'next/link'
+//Home Page
 export default function MyHome() {
-  return  <div>
-        <h1>Welcome to Next app</h1>
-  </div>
+  return <main className={styles.main}>
+    <div className={styles.description}>
+      <nav>
+        <Link href="/greetings">Greetings</Link>
+        <Link href="/about">About</Link>
+        <Link href="/contact">Contact</Link>
+        <Link href="/review">Review</Link>
+
+      </nav>
+    </div>
+  </main>
 }

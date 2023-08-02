@@ -1,17 +1,21 @@
-				NEXT.JS
+Next ={User interface + back end}
 
+User interface -React
+Back end
+  -REST API
+  -GraphQL API
+  -Along with database -sqli,primisa
 
+Lab setup:
+1.vs code
+2.node.js latest version
+3.docker is optional - database integration....
+.................................................................................
+				Next js
+..................................................................................
 What is a Next?
+ Next is a flexible React framework that gives you building blocks to create fast web applications.
 
-Next.js is a framework for building web applications.
-
-With Next.js, you can build user interfaces using React components. Then, Next.js provides additional structure, features, and optimizations for your application.
-
-Under the hood, Next.js also abstracts and automatically configures tooling for you, like bundling, compiling, and more. This allows you to focus on building your application instead of spending time setting up tooling.
-
-Whether you're an individual developer or part of a larger team, Next.js can help you build interactive, dynamic, and fast web applications.
-
-Types of web apps:
 Web Applications:
 .................
 
@@ -75,7 +79,6 @@ New Web services  were designed called "RestFull Web services"
 Restfull web services were used to build any type of data formats like json,xml,pdf,html etc...
 
 
-
 4.Client side web apps called "Single Page Web Apps"(2007 to till date)
 
 Single page web apps are built using javascript at client side where as server side web services(REST apis) are used.
@@ -87,7 +90,6 @@ Frameworks build based on SPA
 1.Angular js
 2.react
 3.vue js
-..............
 .....................................................................................
 			  React as SPA lib
 .....................................................................................
@@ -113,36 +115,39 @@ We provides first class api to "render"  an SPA app into HTML strings on the ser
 This allows server to send back already rendered HTML, allowing end users to see the content immediately while the javascript is being downloaded.
 
 This process is called "hydration", the app is compiled at server side and sent to the client which will be  interactive.
-....................................................................................
-				 Rendering Types
 
-CSR(Client side Rendering): SPA: 
+SSR types:
+ =>Partil SSR 
+     We have SPA already, but only few pages(index.html) page is pre compiled at server and sent to client , from where client apps(spa) starts working.
 
-CSR stands for Client Side Rendering. Here the entire website is rendered in the browser.
+Generally React has api called "ReactDOMServer" using this api we have to render html page on node js(express/hapi)
+ 
+ =>Full SSR
+     Every thing is compiled at server side , where as client logics like api calls using ajax is done at client side once the app is rendered.
 
-Use when building a admin dashboard and when seo is not important. Required javascript enabled on the browser.
+=>Full Stack apps: =>Full SSR(Next.js)
+   Using react like apps are built using full stack apps=>Next js
 
-SSR (Server side rendering)
+Next js Arch with respect to SSR
+.................................
 
-SSR stands for Server Side Rendering. Here the webpages are rendered on the server and then sent to the client.
+please refer pic
+ 
 
-Use when speed and seo is important. App works without javascript enabled in browser.
+SSG/JAMStack: (Static Site Generation)
+............
 
+What is Jamstack?
+Jamstack is an architectural approach that decouples the web experience layer from data and business logic, improving flexibility, scalability, performance, and maintainability.
 
-SSG(Static site generation)
+Jamstack removes the need for business logic to dictate the web experience.
 
- SSG stands for Static Site Generation. Here the webpages are rendered on the build time.
+Just sending HTML pages to the client without preparing htmls pages while requesting.
 
-Use when speed and seo is important. Host the app on any static hosting (netlify/vercel)
+SSR will prepare html at server side during "request-response  phase/cycle"
 
-
-ISR(Incremental Static Regeneration):
-
- ISR stands for Incremental Static Regeneration. Here the webpages are regenerated on the fly based after the defined time.
-
-Same benefits as SSG. Entire app doesn't need to be build after each change.
-
-
+Server side rendering can be done "ahead of time"-->SSG.This means we can pre render an entire application into HTML and serve them as static files.
+This improves site performance and makes deployment a lot simpiler we no longer need to dynamically render pages on request.
 .....................................................................................
 			   Next js  -SSR and SSG
 .....................................................................................
@@ -179,7 +184,6 @@ Next app technologies:
    Vercel is the company who created next js, they are providing a platform to deploy applications in cloud, server less env.
 
 .....................................................................................
-
 Installing Next infrastructure:
 
 System Req:
@@ -191,7 +195,6 @@ Two types of installation
    Which setps everything automatically for you.
 
 npx create-next-app@latest
-
 Need to install the following packages:
   create-next-app@13.4.2
 Ok to proceed? (y) y
@@ -247,58 +250,6 @@ scripts:
  build: runs next build to build the application for production usage
  start: runs next start to start a next apps in production mode.
  lint: runs next lint to set up next built in eslint configuration.
-.........
-
-
-next.config.js
-
-/** @type {import('next').NextConfig} */
-const nextConfig = {}
-
-module.exports = nextConfig
-
- This is going to be used for configuring the next apps.
-
-
-src/app
-  having basic start up files
-
-layout.js
-  root file like index.js or main.js 
-
-page.js
-   landing page is available inside layout.js
-
-public:
-  stores static assests such images,fonts,documents
-  public dir are accessed inside code using the base URL "/".
-
-
-How to start dev server?
-
- npm run dev
-
-Building Blocks of a Web Application
-....................................
-There are a few things you need to consider when building modern applications. Such as:
-
-1.User Interface - how users will consume and interact with your application.
-
-2.Routing - how users navigate between different parts of your application.
-
-3.Data Fetching - where your data lives and how to get it.
-
-4.Rendering - when and where you render static or dynamic content.
-
-5.Integrations - what third-party services you use (CMS, auth, payments, etc) and how you connect to them.
-
-6.Infrastructure - where you deploy, store, and run your application code (Serverless, CDN, Edge, etc).
-
-7.Performance - how to optimize your application for end-users.
-
-8. Scalability - how your application adapts as your team, data, and traffic grow.
-
-9.Developer Experience - your team’s experience building and maintaining your application.
 
 
 next.config.js
@@ -425,5 +376,779 @@ There two types of components
 Server and clients components allow developers to build apps that span the server and client ,coimbining the rich interactivity of client side apps with the improved performance of traditional server rendering.
 
 
+Thinking in Server Components:
+..............................
+
+React was created for building SPAs.
+but how react changed the way we think about building UI,React server components  introduce new mental model for building hybrid apps that leverage the server and client.
+
+=>Instead of React rendering your whole app client-side(such as in the case of Single Page applications).
+ React now gives you the flexibility to choose where to render your components based on "their purpose"
+
+Why server Components?
+......................
+
+1.Performance:
+1.1. Server components allow developers to better leverage server infrastructure. for      eg large dependencies that previously would impact the javascript bundle size on      the client can instead remain entirely on the server.
+
+1.2.They make write a react apps feels similar like jsp and servers,aspx,php or ruby on   rails but the power and flexibility of react and the components model for   templating UI
+
+1.3.When server components the inital page load is faster,client side javascript bundle is reduced.
+
+1.4.We can able caching 
+
+1.5.if you want add client side interactivity we can use "client components"
+
+2.Progressive:
+...............
+1.When a route(index page) is loaded with Next.js, the inital HTML is rendered on the server.
+2.The HTML is then progressively enchanced in the browser, allowing the client to take over the application and add interactivity.
+
+.....................................................................................
+				Client Components
+.....................................................................................
+Client components enable you to add interactivity in the client side to your application.
+
+"In Next.js" they are pre-rendered on the server and hydrated on the client.
+
+You are creating a component , how to say this component is client side and server side..
+
+export default function Greeting(props){
+	
+	return <>
+		<h1>Hello Next</h1>
+             <>
+
+}
+
+How to define that the above code, must be executed in the server or client
+
+'use client'  // "use Client" directive
+
+export default function Greeting(props){
+	
+	return <>
+		<h1>Hello Next</h1>
+             <>
+
+}
+.....................................................................................
+  	When to use server side component and when to use client side component
+.....................................................................................
+
+what do you need?                         Server    client 
+					component  component
+
+1.Fetch data                               yes       no
+
+2.Access back resources(directly)          yes       no
+
+3.Keep security related info(api keys)     yes       no
 
 
+4.large bundle dependencies/reduce client
+  js                                       yes       no
+
+5.Add interactivity and event listeners    no        yes
+
+6.Use state and life cycles hooks          no        yes
+
+7.Use browser only api(storage)            no        yes
+
+8.Custom hooks that depend on state,effects
+  browser apis                             no        yes
+
+9.if you write "class components"          no        yes
+
+
+Patterns:
+........
+1.Moving clients components to the leaves(tree):
+..............................................
+
+if you want to improve perfomance and also add strong security we recommend moving client components to the leaves of your component tree where ever possible.
+
+if you have layout having static data  like logo,links and an interactive search bar that uses state.
+
+Instead of making the whole layout a client component, move the interactive logic to client component eg <SearchBar/> and keep your layout as Server component.
+
+2.Composing Client and Server components:
+..........................................
+
+Server and clients components can be coimbed in the same component tree.
+
+Process behind server and client components:
+............................................
+
+=>On the server, React renders all Server components before sending the result to the client
+   =>This includes server components nested inside client components
+   =>What if the client components are encounted in this stage, it will be skipped.
+
+=>On the client, React renders Client Components and slots in the rendered result of server Compoents
+   =>if any server components are nested inside a client,their rendered content will placed correctly the client component during client compoenent rendering
+
+In Next js, during the inital page load, both the rendered result of server components from the above step and client components are pre-rendered on the server as plain html to produce a faster initall page load.
+.....................................................................................
+
+"Recommended Pattern: Passing Server components to client components as prop"
+.....................................................................................
+			  Pages & Routing
+.....................................................................................
+
+The core of next apps are routing.
+The skeleton of every app is routing.
+
+Pages:
+......
+  A page is UI that is unique to a route.
+  You can define pages by exporting a component from page.js file to make the route   publicly accessible
+  
+Create first Page by adding a page.js file inside app directory. 
+
+By default routing is enabled,automatically, unlike react spas you dont need to specify the routing.
+
+Note: in next js you dont need to configure any routers, routers are mapped against files
+
+http://localhost:3000/  =>Root URL(route) => page.js
+
+  By default root path is mapped against page.js
+
+src/app/page.js
+
+export default function HomePage() {
+    return <h1>
+        Hello,Welcome to Next js
+    </h1>
+}
+
+app/page.js  ----> /
+
+How to define new route and render accordingly?
+
+app/about/page.js   => /about
+   
+export default function About(){
+    return <h1>About us</h1>
+}
+
+app/dashboard/page.js  ====> /dashboard
+
+
+export default function DashBoard() {
+    return <h1>Dashboard</h1>
+}
+
+app/dashboard/settings/page.js     ===> http://localhost:3000/dashboard/settings
+....................................................................................
+			Routing core concepts
+....................................................................................
+
+Inside the app directory, folders are used to define routes.
+
+Each folder represents a "route segment" that maps to a "URL" segment. To create nested route, you can nest folders inside each other.
+
+	localhost:3000 /     dashboard /settings
+		       |        |          |
+		 Root segment  Segment     leaf Segment
+
+How to create segments(eiether root/segement/leaf)?
+  A special file called page.js to make route segments publicly accessible.
+
+if you different name other than page.js , it will not be avaible for public access.
+
+ app/dashboard/config/myconfig.js
+
+http://localhost:3000/dashboard/config/myconfig
+.....................................................................................
+			   Creating UI
+.....................................................................................
+
+Special file conventions are used to create UI for each route segment.
+
+File convention
+pages -  page.js
+layouts - layout.js
+routes   - route.js - server side end points
+templates  - template.js
+loading   ----loading.js
+errors    -----error.js,global-error.js,not-found.js 
+..............................................................................
+Roles of Folders and files:
+..........................
+
+1.folder are used to define routes. A route is a single path of nested folders, following the hierarchy from the the root folder down to a final leaf folder that includes a page.js file
+
+2.Files are used to create UI that is shown the route segment
+....................................................................................
+
+page.js :  create the unique UI of a route and make the path publicly accessible
+  -route.js : create server side apis/endpoints for a route
+
+layout.js:
+  Create shared UI for a segement and its children.
+  A layout wraps a page or child segement.
+ -template.js
+     Similar to layout.js execpt  a new component instance is mounted on navigation.
+loading.js
+   To show progress bar while loading ui, it uses reac Suspense boundary.
+ 
+error.js
+  to handle ui errors,internally it uses error boundary
+  ->global-errors.js 
+      catching errors in the layout layer level
+  ->not-found.js
+        this is shown when if there is no url segment matches...
+....................................................................................
+			   Component hierachy
+....................................................................................
+
+layout.js
+  Every next app must have one layout.js which define root layout.
+
+template.js
+   Templates are similar to layouts that wrapy each child layout or page.
+
+error.js 
+   React Error boundary - layout level errors
+
+ErrorBoundary:
+Error boundaries are React components that catch JavaScript errors anywhere in their child component tree, log those errors, and display a fallback UI instead of the component tree that crashed. Error boundaries catch errors during rendering.
+
+loading.js
+   Which loads component in async manner
+   Components render sync manner.
+Lazy loading:
+  load components in delayed manner
+React lazy loading is done via Suspense Component
+
+not-found.js :React Error Boundary
+    This is component used to handle errors during component load/page
+
+
+page.js or nestlayout layout.js
+   Actual UI is displayed
+
+Component Structure/Hierarchy:
+..............................
+
+<Layout>
+   <Template>
+	<ErrorBoundary fallback={<Error/>}>
+	   <Suspense fallback={<Loading/>}>
+		<ErrorBoundary fallback={<NotFound/>}
+		    <Page/>	
+		<ErrorBoundary>
+           <Suspense>	
+        </ErrorBoundary>
+   </Template>	
+</Layout>
+....................................................................................
+			Nested Route component Hierachy
+....................................................................................
+app/
+ page.js
+ layout.js
+ not-found.js
+ template.js
+ loading.js
+ error.js
+ 
+dashboard
+  -layout.js
+  -error.js
+  -loading.js
+  
+<Layout>
+    <ErrorBoundary fallback={<Error/>}>
+	  <Suspense fallback={<Loading/>}>
+		<ErrorBoundary fallback={<NotFound/>}
+		    <Page/>	
+		<ErrorBoundary>
+           <Suspense>	
+        </ErrorBoundary>
+   
+</Layout>
+
+app/
+ page.js
+ layout.js
+ not-found.js
+ template.js
+ loading.js
+ error.js
+ 
+dashboard
+  -layout.js
+  -error.js
+  -loading.js
+settings
+  -layout.js
+  -error.js
+  -loading.js
+  -page.js
+
+
+dashboard/settings
+  
+<Layout>
+    <ErrorBoundary fallback={<Error/>}>
+	  <Suspense fallback={<Loading/>}>
+	     <Layout> <!-- settings---!>
+		<ErrorBoundary fallback={<Error/>}>
+		    <Suspense fallback={<Loading/>}>
+			<Page/>
+		    </Suspense>
+		<ErrorBoundary>
+	     <Layout/>
+           <Suspense>	
+        </ErrorBoundary>
+   
+</Layout>
+
+...................................................................................
+   			 Linking and Navigation
+...................................................................................
+
+The Next.js router uses  "Server centric routing with client side navigation
+
+In old next versions there is pages dir which uses client side routing, the App router uses "server centric routing" to algin server components and data fetching on the server. with server centric routing, the client does not have to  download to route map and the request for compoentents can be use to look up routes.
+			
+Client side Navigation or client Routing:
+..........................................
+ The pages are transfered from one page to another page using hyper links or there are js apis like router.push method.
+ Client navigation done by the browser apis
+ Server side navigation done by the server
+			
+There are two types of components for naviation.
+
+1.Link compoenent
+2.useRouter Hook
+
+Link Components
+Props
+ ->href -required
+ ->replace 
+ -prefetch
+ -shallow
+ -local
+
+Link Eg:
+
+src/app/page.js
+import Link from 'next/link'
+import styles from './page.module.css'
+
+export default function Home() {
+  return (
+    <main className={styles.main}>
+      <div className={styles.description}>
+        <nav>
+          <Link href="/dashboard">Dashboard</Link>
+          <Link href="/products">Products</Link>
+        </nav>
+      </div>
+    </main>
+  )
+}
+
+src/app/dashboard/page.js
+export default function DashboardPage() {
+
+    return <div>
+        <h1>Dashboard</h1>
+    </div>
+}
+src/app/products/page.js
+export default function ProductsPage() {
+    return <div>
+        <h1>Products</h1>
+    </div>
+}
+.................................................................................
+			 Dynamic Routes
+.................................................................................
+
+Url Pattern 
+  /products/1
+  /users/2
+
+When you dont know the exact segment names ahead of time and want to create routes from dynamic data, you can use Dynamic segments that are filled in the run time or prerendered at build time.
+
+Syntax:
+How to create dynamic segment?
+  A segment is created by wrapping a folder's name in square brackets
+
+ [folderName] for eg [id] [slug] [name] [city]
+
+slug is convetional name used in next js to denote dynamic path.
+
+slug:
+ A slug is the part of a URL that identifies a particular page on a website in an easy-to-read form. In other words, it's the part of the URL that explains the page's content. For this article, for example, the URL is https://yoast.com/slug, and the slug simply is 'slug'
+
+src/app/blog/[slug]
+ |
+
+src,app,blog,[slug] all are folders only
+
+src/app/blog/[slug]
+  -page.js
+  -layout.js
+  -template.js
+ etc...   
+
+src/app/blog/[slug]
+  page.js
+
+export default function Blog(props) {
+    return <div>
+        <h1>Blog</h1>
+    </div>
+}
+Testing:
+ http://localhost:3000/blog/1
+ http://localhost:3000/blog/2
+ http://localhost:3000/blog/3
+ http://localhost:3000/blog/4
+
+Reading Dynamic segemnts can be read inside Page,layout,route,geneateMetaData functions.
+Dynamic Segments are available inside page via props.params 
+
+props.params will return
+  {folderName:1}
+
+read: props.params.slug 
+.....................................................................................
+			 Catch-all Segments
+....................................................................................
+Dynamic segements can be extended to catch-all subsequent segements by adding an ellipsis inside the brackets [...FolderName]
+
+eg:
+ app/shop/[...slug]/page.js will match the url pattern like below
+    /shop/cloths 
+    /shop/cloths/tops
+    /shops/cloths/tops/t-shirts 
+    /shop/food
+    /shop/food/veg
+
+Route                                    url                     params
+app/shop/[...slug]/page.js		/shop/a                 { slug: ['a'] }
+
+app/shop/[...slug]/page.js		/shop/a/b               { slug: ['a','b'] }
+
+
+eg:
+src/app/shop/[...slug]/page.js
+
+export default function Shop(props) {
+    const nestedParams = props.params.slug
+    return <div>
+        <h1>Shop</h1>
+        {nestedParams}
+    </div>
+}
+Testing:
+http://localhost:3000/shop/cloths/tops/tshirts
+....................................................................................
+			Optional Catch-all Segments
+...................................................................................
+catch all segements can be made optional by including the parameter in double square brackets
+    [[...folderName]]
+eg:
+ /app/movie/[[...slug]]/page.js will match
+   
+    /movie
+    /movie/eng
+    /shop/eng/sciencefiction
+
+
+Route                                    url                     params
+app/movie/[[...slug]]/page.js		/movie                   {  }
+
+app/shop/[[...slug]]/page.js		/movie/eng              { slug: ['eng'] }
+....................................................................................
+			   React Components
+.....................................................................................
+
+React components are just represent UI.
+
+Next Components
+  Layouts and pages
+
+Page represents UI.
+
+export default function ShopPage(){ 
+        return <Product/>
+}
+....................................................................................
+		 Server components and clients components
+....................................................................................
+
+Server components:
+ =>Server components are rendered in the server side
+
+Using useState hook inside component:
+
+src/app/counter/page.js
+import Increment from "./increment";
+
+export default function CounterPage(props){
+    return <div>
+        <h1>Counter Page</h1>
+        <Increment/>
+    </div>
+}
+
+src/app/counter/increment.js
+import { useState } from "react"
+
+export default function Increment() {
+    const [count, setCount] = useState(10)
+    return <>
+        <h2>Increment : {count}</h2>
+    </>
+}
+
+http://localhost:3000/counter
+
+You will encounter error like below
+
+Failed to compile
+
+Next.js is up to date
+./src\app\counter\increment.js
+ReactServerComponentsError:
+
+You're importing a component that needs useState. It only works in a Client Component but none of its parents are marked with "use client", so they're Server Components by default.
+
+   ,-[E:\session\IBM\2023\May\NextJS\client-servercomponents\src\app\counter\increment.js:1:1]
+ 1 | import { useState } from "react"
+   :          ^^^^^^^^
+ 2 | 
+ 3 | export default function Increment() {
+ 3 |     const [count, setCount] = useState(10)
+   `----
+
+Maybe one of these should be marked as a client entry with "use client":
+./src\app\counter\increment.js
+./src\app\counter\page.js
+ 
+The above is called "Client Code" , so this code cant be compiled in server
+
+By default every component is "Server is component".
+Server components 
+  page,layout,templates,loading....
+
+Client components
+  There is directive 'use client'; 
+
+
+src/app/counter/counter.js | counter.jsx
+
+'use client';
+
+import { useState } from "react"
+
+export default function Increment() {
+    const [count, setCount] = useState(10)
+    return <>
+        <h2>Increment : {count}</h2>
+        <button onClick={() => setCount(count + 1)}>+</button>
+    </>
+}
+
+//custom Hook -- useState,browser api,useEffect,listeners
+
+Client side code will not trigger page reloads for every mutation....
+....................................................................................
+
+Even simple listerners also considered Client Side code
+
+'use client';
+
+
+export default function Alert() {
+    return <>
+        <button onClick={() => alert('Hello,Next j')}>Alert</button>
+    </>
+}
+
+Pointers:
+..........
+=>Compoenents in the server moudule graph(component tree) are guaranteed to be ony rendered on the server.
+=>Components in the client module graph(compoent tree) are primarily rendered on the client but with Next.js they can also be re-rendered on the server and hydrated on the client. precompile as plain/raw html and execute as dom tree in the client.
+
+=>'use Client' directive must be top of a file before any imports
+....................................................................................
+			Client Component uses another Client Components
+
+
+src/app/review/reviews.js
+
+import Like from "./like"
+import Dislike from "./dislike"
+
+//client component
+export default function Reviews(){
+    return <>
+        <Like/>
+        <Dislike/>
+    </>
+}
+
+src/app/review/like.js
+
+ 'use client';
+
+import { useState } from "react"
+
+//client component
+export default function Like(){
+    const [count, setCount] = useState(10)
+    return<>
+        <h1>Like {count}</h1>
+    </>
+}
+
+src/app/review/dislike.js
+ 'use client';
+
+import { useState } from "react"
+
+//client component
+export default function Dislike() {
+    const [count, setCount] = useState(10)
+    return <>
+        <h1>Dislike {count} </h1>
+    </>
+}
+
+if you use clients inside another clients, you can use "use client" directive only top level /parent component only.
+
+eg:
+ 'use client';
+
+import Like from "./like"
+import Dislike from "./dislike"
+
+//client component
+export default function Reviews(){
+    return <>
+        <Like/>
+        <Dislike/>
+    </>
+}
+//  'use client';
+
+import { useState } from "react"
+
+//client component
+export default function Dislike() {
+    const [count, setCount] = useState(10)
+    return <>
+        <h1>Dislike {count} </h1>
+    </>
+}
+//  'use client';
+
+import { useState } from "react"
+
+//client component
+export default function Like(){
+    const [count, setCount] = useState(10)
+    return<>
+        <h1>Like {count}</h1>
+    </>
+}
+.....................................................................................
+Patterns:
+1.Server components has client Compoents - discussed already
+2.Clients Components has another client compoents.-discussed already
+3.Client Component has server Component			 
+...................................................................................
+			Client Component has server Component
+
+
+src/app/client/page.js
+import ClientComponent from "./client";
+
+export default function ClientPage(){
+    return <>
+        <h1>Server Page</h1>
+        <ClientComponent/>
+    </>
+}
+
+src/app/client/client.jsx
+
+'use client';
+
+import ExampleServerComponent from "./server-component";
+
+export default function ClientComponent() {
+
+    return <>
+        <button onClick={() => {
+            alert('Client Compoent')
+        }}>Client</button>
+        <ExampleServerComponent/>
+    </>
+}
+src/app/client/server-component.js
+
+export default function ExampleServerComponent() {
+    return <>
+         <h1>ExampleServerComponent</h1>
+    </>
+}
+
+Note : this pattern is not recommened. Why
+
+if you render any server component inside client component, implicitly server compoent becomes client component. so that we will loose the purpose of server components.
+..................................................................................
+
+What if i want to render server components inside client compoents without lossing server compilation?
+   Pass Server Component  to Client component as "props"
+   
+src/app/client/page.js
+
+import ClientComponent from "./client";
+
+import ExampleServerComponent from "./server-component";
+
+export default function ClientPage() {
+    return <>
+        <h1>Server Page</h1>
+        {/* <ClientComponent/> */}
+
+        {/* Server Component passed as prop */}
+        <ClientComponent>
+            {/* Server Component passed as prop */}
+            <ExampleServerComponent />
+        </ClientComponent>
+    </>
+}
+
+src/app/client/server-component.js
+
+export default function ExampleServerComponent() {
+    return <>
+         <h1>ExampleServerComponent</h1>
+    </>
+}
+
+src/app/client/client.js
+'use client';
+
+//new pattern: server components are rendered inside client component as prop
+
+export default function ClientComponent(props) {
+    console.log(props)
+    return <>
+        <button onClick={() => {
+            alert('Client Compoent')
+        }}>Client</button>
+        {/* <ExampleServerComponent /> */}
+        {props.children}
+    </>
+}
+....................................................................................
