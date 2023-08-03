@@ -1,5 +1,6 @@
 
-
+import Link from 'next/link'
+import  './app.css'
 
 //meta data:
 export const metadata = {
@@ -15,7 +16,27 @@ export const metadata = {
 // }
 const RootLayout = ({ children }) => {
   return <html lang="en">
-    <body>{children}</body>
+    <body>
+      <div id="rootLayout" class="container">
+        {/* Header */}
+        <nav>
+          <ul>
+            <li><Link href="/greetings">Greetings</Link></li>
+            <li><Link href="/about">About</Link></li>
+            <li><Link href="/contact">Contact</Link></li>
+            <li><Link href="/review">Review</Link></li>
+            <li><Link href="/comments">Comments</Link></li>
+          </ul>
+          <hr />
+        </nav>
+        {children}
+        <hr />
+        {/* Footer */}
+        <nav>
+          <p>copy rights @IBM</p>
+        </nav>
+      </div>
+    </body>
   </html>
 }
 export default RootLayout;
