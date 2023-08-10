@@ -1,0 +1,67 @@
+
+Revalidation as part of url itself
+
+export default async function ISRDetails(props) {
+    const response = await fetch(`http://worldtimeapi.org/api/timezone/Asia/${props.params.city}`,{ next: { revalidate: 10 } });
+    const data = await response.json();
+    return <>
+        {/* <h1>ISR Details page {JSON.stringify(props)}</h1> */}
+        <h1>Time now :{new Date(data.datetime).toLocaleTimeString()} </h1>
+        {/* <h1>{data.datetime}</h1> */}
+    </>
+}
+export async function generateStaticParams() {
+    return [{ city: 'Kolkata' }];
+}
+
+Revalidation as part of page:
+
+export const revalidate = 5
+
+export default async function ISRDetails(props) {
+      const response = await fetch(`http://worldtimeapi.org/api/timezone/Asia/${props.params.city}`);
+    const data = await response.json();
+    return <>
+        {/* <h1>ISR Details page {JSON.stringify(props)}</h1> */}
+        <h1>Time now :{new Date(data.datetime).toLocaleTimeString()} </h1>
+        {/* <h1>{data.datetime}</h1> */}
+    </>
+}
+export async function generateStaticParams() {
+    return [{ city: 'Kolkata' }];
+}
+
+Revalidation By path and keys:
+..............................
+
+src/app/api/revalidate/route.js
+
+import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath, revalidateTag } from 'next/cache';
+
+export async function GET(request) {
+    const path = request.nextUrl.searchParams.get('path') || '/timecache/[city]';
+    const collection =
+        request.nextUrl.searchParams.get('collection') || 'collection';
+    revalidatePath(path);
+    revalidateTag(collection);
+    console.log('revalidated', path, collection);
+    // console.log('revalidated', path);
+    return NextResponse.json({
+        revalidated: true,
+        now: Date.now(),
+        cache: 'no-store',
+    });
+}
+
+Run this 
+GET http://localhost:3000/api/revalidate
+
+{
+    "revalidated": true,
+    "now": 1691162983375,
+    "cache": "no-store"
+}
+
+and go  and check.
+http://localhost:3000/timecache/Kolkata

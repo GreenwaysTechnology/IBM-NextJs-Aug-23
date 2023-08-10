@@ -199,7 +199,7 @@ export async function DELETE(request, { params }) {
 Database setup:
 
 ORM - Prisma
-database: sqlite
+database: sqllite
 
 E:\session\IBM\2023\aug\demo-api
 npm i @prisma/client
