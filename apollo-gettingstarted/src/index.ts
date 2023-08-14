@@ -1,28 +1,57 @@
 import { ApolloServer } from "@apollo/server"
 import { startStandaloneServer } from '@apollo/server/standalone'
-import { USERS } from "./mock-data/users.js"
+
+//Mock data
+const USERS = [{
+    id: 1,
+    name: 'A',
+    email: 'a@gmail.com'
+},
+{
+    id: 2,
+    name: 'B',
+    email: 'b@gmail.com'
+},
+{
+    id: 3,
+    name: 'C',
+    email: 'c@gmail.com'
+}
+
+]
+
+const ADDRESS = [{
+    city: 'Coimbatore',
+    state: 'TN',
+    id: 1 //linking field
+},
+{
+    city: 'BNG',
+    state: 'KA',
+    id: 2 //linking field
+},
+{
+    city: 'HYD',
+    state: 'TS',
+    id: 3 //linking field
+}]
 
 //Define schema
 const typeDefs = `
-#Simple Query which returns Hello World
- 
+
 type User {
-    id:ID
-    firstName:String
-    lastName:String
-    age:Int
-    points:Float
-    status:Boolean
- }
- input UserResponseInput {
-    id:ID
-    firstName:String
-    lastName:String  
- }
- type Query {
-   users:[User]
-   userById(id:ID!):User
- }
+   id:ID!
+   name:String
+   email:String
+   address:Address
+}
+type Address{
+    city:String
+    state:String
+}
+type Query {
+    users:[User]
+}
 `
 //Define Resolver: biz logic
 const resolvers = {
@@ -32,12 +61,15 @@ const resolvers = {
             //return object
             return USERS
         },
-        //here _ is just convention to skip the arg
-        userById(_, args) {
-            const { id } = args
-            //filter data based on id
-            return USERS.find(user => {
-                return user.id === +id
+    },
+    //Resolver Chain
+    User: {
+        address(parent, args, contextValue, info) {
+            console.log(parent)
+            //connect parent with child: connect this address with user 
+            return ADDRESS.find(address => {
+                //linking field === parent field
+                return address.id === parent.id
             })
         }
     }
@@ -46,8 +78,7 @@ const resolvers = {
     //Subscription
 }
 
-
-
+//create instance of ApolloServer and pass schema , resolver as config
 
 const server = new ApolloServer({
     typeDefs: typeDefs,
