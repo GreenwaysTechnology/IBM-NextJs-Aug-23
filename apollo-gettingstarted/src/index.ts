@@ -1,93 +1,132 @@
+import { RESTDataSource } from "@apollo/datasource-rest"
 import { ApolloServer } from "@apollo/server"
-import { startStandaloneServer } from '@apollo/server/standalone'
+import { startStandaloneServer } from "@apollo/server/standalone"
 
-//Mock data
-const USERS = [{
-    id: 1,
-    name: 'A',
-    email: 'a@gmail.com'
-},
-{
-    id: 2,
-    name: 'B',
-    email: 'b@gmail.com'
-},
-{
-    id: 3,
-    name: 'C',
-    email: 'c@gmail.com'
+
+//type class 
+export class Book {
+    id?: number;
+    title?: string;
+    author?: string;
 }
 
-]
-
-const ADDRESS = [{
-    city: 'Coimbatore',
-    state: 'TN',
-    id: 1 //linking field
-},
-{
-    city: 'BNG',
-    state: 'KA',
-    id: 2 //linking field
-},
-{
-    city: 'HYD',
-    state: 'TS',
-    id: 3 //linking field
-}]
-
-//Define schema
-const typeDefs = `
-
-type User {
-   id:ID!
-   name:String
-   email:String
-   address:Address
+export class MutationResponse {
+    status: string
+    data?: Book
 }
-type Address{
-    city:String
-    state:String
-}
-type Query {
-    users:[User]
-}
-`
-//Define Resolver: biz logic
-const resolvers = {
-    //Query Implmentation
-    Query: {
-        users() {
-            //return object
-            return USERS
-        },
-    },
-    //Resolver Chain
-    User: {
-        address(parent, args, contextValue, info) {
-            console.log(parent)
-            //connect parent with child: connect this address with user 
-            return ADDRESS.find(address => {
-                //linking field === parent field
-                return address.id === parent.id
-            })
-        }
+
+//Rest Data Source
+export class BooksAPI extends RESTDataSource {
+    constructor() {
+        super()
+        this.baseURL = "http://localhost:3004/"
     }
-    //Mutation
-
-    //Subscription
+    //apis:biz api
+    async getBooks() {
+        //http://localhost:3000/books
+        return this.get<Book[]>(`books`)
+    }
+    async book(id: number) {
+        return this.get<Book>(`books/${id}`)
+    }
+    //save book
+    async postBook(book: Book) {
+        return this.post<Book>(`books`, { body: book }).then(resp => resp)
+    }
+    async updateBook(bookId: number, book: Book) {
+        return this.put<Book>(`books/${bookId}`, { body: book }).then(resp => resp)
+    }
 }
 
-//create instance of ApolloServer and pass schema , resolver as config
+//Context Type:
+interface ContextValue {
+    dataSources: {
+        booksAPI: BooksAPI
+    }
+}
 
-const server = new ApolloServer({
-    typeDefs: typeDefs,
-    resolvers: resolvers
+
+//Define Schema
+const typeDefs = `
+type Book {
+    id:Int
+    title:String
+    author:String
+}
+
+#Query
+type Query {
+    "GET all Books from the Rest api server"
+    books:[Book!]
+    book(id:Int!):Book
+}
+
+
+#Mutations
+
+input BookInput{
+    id:Int
+    title:String!
+    author:String!
+}
+
+type Mutation {
+    "POST new Book to the REST API server"
+    addBook(input:BookInput):Book
+    updateBook(id:ID!,input:BookInput):Book
+}
+
+`
+//Define Resolver
+const resolvers = {
+    //Query
+    Query: {
+        async books(parent, args, contextValue, info) {
+            const { dataSources } = contextValue
+            return dataSources.booksAPI.getBooks()
+        },
+        //Book By Id 
+        async book(parent, args, contextValue, info) {
+            const { dataSources } = contextValue
+            const id = +args.id
+            return dataSources.booksAPI.book(id)
+        }
+
+    },
+    Mutation: {
+        //create Book
+        async addBook(parent, args, contextValue, info) {
+            const { input } = args
+            return contextValue.dataSources.booksAPI.postBook(input)
+        },
+        // //update Book
+        async updateBook(parent, args, contextValue, info) {
+            const { id, input } = args
+            return contextValue.dataSources.booksAPI.updateBook(id, input)
+        },
+        // //remove Book
+        // async removeBook(parent, args, contextValue, info) {
+
+        // }
+    }
+}
+
+const server = new ApolloServer<ContextValue>({
+    typeDefs,
+    resolvers,
 })
-
+//start the webserver and deploy
 const { url } = await startStandaloneServer(server, {
     listen: {
         port: 4000
+    },
+    context: async () => {
+        return {
+            dataSources: {
+                booksAPI: new BooksAPI()  // dataSources.booksAPI.getBooks()
+            }
+        }
     }
 })
 console.log(`Apollo Server is Ready at ${url}`)
+
